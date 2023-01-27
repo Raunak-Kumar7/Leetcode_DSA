@@ -29,7 +29,6 @@ vector<vector<int>> generate(int numRows) {
          if(numRows==2)
             return ans;
         
-        
         int n=numRows;
         for(int i=3;i<=n;i++)
         {
