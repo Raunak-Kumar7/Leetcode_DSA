@@ -10,7 +10,7 @@ public:
         vector<int> ans(n,-1);
         int idx=k; //non -1 will start filling from index k
         
-        k=2*k +1;
+        k=2*k +1; //to take average number of elements = 2k+1
         int i=0;
         int j=0;
         long sum =0;
