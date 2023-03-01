@@ -2,9 +2,7 @@
     
     //M2 : Hashmap Approach + Prefix Sum --> General for any array(not 0,1) O(n) O(n)
     
-    //M3: Optimised Sliding Window  O(n) O(1)
-    //Variable Size window (involving Count)
-    //Count of Subarrays with sum K
+    //understand
     int numSubarraysWithSum(vector<int>& nums, int goal) {
         //Prefix Sum Approach LC 560
         unordered_map<int,int> mp; //we dont need indices, we only need count of indices
@@ -19,3 +17,9 @@
         }
         return count;
     }
+
+
+    //M3: Optimised Sliding Window  O(n) O(1)
+    //Variable Size window (involving Count)
+    //Count of Subarrays with sum K
+    

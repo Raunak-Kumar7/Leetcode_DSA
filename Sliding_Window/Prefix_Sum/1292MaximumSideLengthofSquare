@@ -1,0 +1,162 @@
+    //FOR 2D MATRICES PREFIX SUM USE THE LAST APPRAOCH WHICH GIVES THE SUM OF A MATRIX IN O(1)
+    //THE METHODS 1,2 AND USED IN 1314,304 ARE ROW WISE PREFIX(USE RANGE LOOP TO FIND CUMULATIVE SUM OF EACH ROW) WHICH CAN FURTHER BE OPTIMISED 
+    
+    
+    
+    //2d prefix sum
+    //Without Binary search (TLE)
+    
+    int maxSideLength(vector<vector<int>>& mat, int threshold) {
+        //Make prefix table because we dont want to calc sum again and again
+        vector<vector<int>> prefix;
+        for(auto i:mat)
+        {
+            int sum = 0;
+            vector<int> temp;
+            for(auto j:i)
+            {
+                sum+=j;
+                temp.push_back(sum);
+                //cout<<sum<<" ";
+            }
+            //cout<<endl;
+            prefix.push_back(temp);
+        }
+        
+        //size of square can be from 1-->min(m,n)
+        int m = mat.size();
+        int n = mat[0].size();
+        int ans = 0;
+        for(int s = 1;s<=min(m,n);s++)//instead of for loop apply binary search on ans
+        {
+            //Check all square of size s and if sum is <=threshold continue to next size
+            bool flag = false;
+            for(int i=0;i<m;i++)
+            {
+                for(int j=0;j<n;j++) //Squares Starting whose top left is (i,j)
+                {
+                    //If rightmost position of sqaure exist and bottommost position exist --> A square can be formed
+                    if(i+s-1>=m || j+s-1>=n) //cases where square of size s with i,j as top left is not possibele
+                        continue;
+                    else //if possible check sum
+                    {
+                        int sum = 0;
+                        for(int range = i;range<=i+s-1;range++)
+                        {
+                            sum+=prefix[range][j+s-1];
+                            if(j>0)
+                                sum-=prefix[range][j-1];
+                        }
+                        if(sum<=threshold)
+                        {
+                            ans = max(ans,s); //once found of size s no need to check others // OPTIMISATION
+                            flag = true;
+                            break;
+                        }
+                            
+                    }
+                }
+                if(flag == true) break;
+            }
+        }
+        return ans;
+    }
+
+
+    //BINARY SEARCH (ACCEPTED)
+        //2d prefix sum
+    //With Binary search (else TLE)
+    
+    int maxSideLength(vector<vector<int>>& mat, int threshold) {
+        //Make prefix table because we dont want to calc sum again and again
+        vector<vector<int>> prefix;
+        for(auto i:mat)
+        {
+            int sum = 0;
+            vector<int> temp;
+            for(auto j:i)
+            {
+                sum+=j;
+                temp.push_back(sum);
+                //cout<<sum<<" ";
+            }
+            //cout<<endl;
+            prefix.push_back(temp);
+        }
+        
+        //size of square can be from 1-->min(m,n)
+        int m = mat.size();
+        int n = mat[0].size();
+        int ans = 0;
+        int start = 1;
+        int end = min(m,n);
+        
+        while(start<=end)//instead of for loop apply binary search on ans
+        {
+            int s = (start+end)/2;
+            cout<<s<<" "<<endl;
+            bool flag = false;
+            for(int i=0;i<m;i++)
+            {
+                for(int j=0;j<n;j++) //Squares Starting whose top left is (i,j)
+                {
+                    //If rightmost position of sqaure exist and bottommost position exist --> A square can be formed
+                    if(i+s-1>=m || j+s-1>=n) //cases where square of size s with i,j as top left is not possibele
+                    {
+                        cout<<"C "<<endl;
+                        continue;
+                    }    
+                    else //if possible check sum
+                    {
+                        int sum = 0;
+                        for(int range = i;range<=i+s-1;range++)
+                        {
+                            sum+=prefix[range][j+s-1];
+                            if(j>0)
+                                sum-=prefix[range][j-1];
+                        }
+                        if(sum<=threshold)
+                        {
+                            ans = max(ans,s); //once found of size s no need to check others with same size// OPTIMISATION                  
+                            cout<<ans<<" "<<endl;
+                            flag = true; 
+                            //To get better answer we go right to maximize
+                            start = s+1; //mid is taken as ans --> mid+1
+                            cout<<start<<" "<<endl;
+                            break;
+                        }
+                            
+                    }
+                }
+                if(flag == true) break;
+            }
+            if(flag == false) //not found an answer of this size so go with smaller size
+                end = s-1;    //(mid = s)
+            //cout<<start<<" "<<end<<endl;
+        }
+        return ans;
+    }
+
+
+
+
+//MOST SUITABLE APPROACH FOR 2D PREFIX ARRAY
+// https://leetcode.com/problems/maximum-side-length-of-a-square-with-sum-less-than-or-equal-to-threshold/discuss/698422/Python-Prefix-Sum-(Explanation-with-Diagram)
+
+// //1st Pass - O(MN) : Create a prefix sum matrix. Note *how we have zero-padding* on the top row and left column after the conversion
+// 					              0 0 0 0 
+// 1 1 1                          0 1 2 3 
+// 1 0 0            --->          0 2 3 4 
+// 1 0 0                          0 3 4 5 
+ 
+ //ROW AND COLUMN HAVE 0 PADDING
+
+ //in this method each cell of prefix array denotes sum of RECTANGLE till that cell 
+
+// The areas of the 3 rectangles are each given by a single position in the prefix-sum matrix 
+
+//--------------
+//To create this Prexif Sum first do row wise prefix sum then do column wise prefix sum in same prefix array
+//--------------
+
+//Also try to think if we can change these prefix sum problems to constant Space(Space Optimisation) i.e. without creating prefix array 
