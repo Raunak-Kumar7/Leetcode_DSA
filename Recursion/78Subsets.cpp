@@ -14,7 +14,7 @@
         //take
             temp.push_back(nums[ind]);
             solve(ind+1,nums,ans,temp,n);
-            temp.pop_back();
+            temp.pop_back();  //reset temp for not take case
         //not take
             solve(ind+1,nums,ans,temp,n);
       
