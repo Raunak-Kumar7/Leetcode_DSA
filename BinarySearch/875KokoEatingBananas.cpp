@@ -8,12 +8,10 @@
         for(int i=0;i<n;i++)
         {
             time+=ceil((double)piles[i]/speed);  //Dont do integer Division (WA)
-            
         }
         return time<=h ;
     }
     int minEatingSpeed(vector<int>& piles, int h) {
-        int n = piles.size();
         int f = 1;
         int l = *max_element(piles.begin(),piles.end());
         while(f<l)
