@@ -1,11 +1,15 @@
+    //S1: Print Left Boundary ITERATIVE Except Leavess and root(KEEP GOING LEFT1] Check if not leaf add 2] go left till possible 3] else go right)
+    //S2: Print Leaves (do Inorder Traversal) and keep adding if its a leaf (ONLY LEAVES IS RECURSIVE)
+    //S3: Print Right Boundary ITERATIVE Except Leaves and root Exactly same as left (KEEP GOING RIGHTAt last just reverse it)
+    
+    //Also Implement isLeaf Function to check if its a leaf node or not
+    
+
 class Solution {
 public:
     bool isLeaf(Node* root)
     {
-        if(root->left==NULL && root->right==NULL)
-            return true;
-        else
-            return false;
+        return (root->left==NULL && root->right==NULL);
     }
     void addLeftBoundary(Node* root, vector<int>& res)
     {
@@ -17,20 +21,20 @@ public:
             if(curr->left)
                 curr = curr->left;
             else
-                curr = curr->right;
+                curr = curr->right;//Go right only when left is not possible
         }
     }
     void addLeaves(Node* root, vector<int>& res) //recursive function
     {
+        if(root==nullptr)
+            return;
         if(isLeaf(root))
         {
             res.push_back(root->data);
             return;
         }
-        if(root->left)
-            addLeaves(root->left,res);
-        if(root->right)
-            addLeaves(root->right,res);
+        addLeaves(root->left,res);
+        addLeaves(root->right,res);
     }
     void addRightBoundary(Node* root, vector<int>& res)
     {

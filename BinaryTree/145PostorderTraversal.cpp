@@ -11,14 +11,22 @@
  */
 class Solution {
 public:
-    vector<int> ans;
-    vector<int> postorderTraversal(TreeNode* root) {
-        if(root==nullptr)
-            return ans;
-        postorderTraversal(root->left);
-        postorderTraversal(root->right);
+    void postorder(vector<int>& ans, TreeNode* root)
+    {
+        if(root == nullptr)
+            return;
+        postorder(ans,root->left);
+        postorder(ans,root->right);
         ans.push_back(root->val);
-        
+    }
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        postorder(ans,root);
         return ans;
     }
 };
+
+
+//Instead of writing a separate Function , we can also declare the ans vector globally, and implement in the same function
+
+

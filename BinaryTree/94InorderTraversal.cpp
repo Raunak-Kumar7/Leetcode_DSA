@@ -11,13 +11,19 @@
  */
 class Solution {
 public:
-    vector<int> ans;
-    vector<int> inorderTraversal(TreeNode* root) {
-        if(root==nullptr)
-            return ans;
-        inorderTraversal(root->left);
+    void inorder(vector<int>& ans, TreeNode* root)
+    {
+        if(root == nullptr)
+            return;
+        inorder(ans,root->left);
         ans.push_back(root->val);
-        inorderTraversal(root->right);
+        inorder(ans,root->right);
+    }
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        inorder(ans,root);
         return ans;
     }
 };
+
+//Instead of writing a separate Function , we can also declare the ans vector globally, and implement in the same function
