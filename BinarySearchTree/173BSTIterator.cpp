@@ -27,35 +27,35 @@ public:
 };
 
 //Approach 2 O(h) S.C.
-//Using stack push till extreme left, when do next go right and push till extreme left
+//Using stack push till extreme left, when not possible pop go right and push till extreme left
 class BSTIterator {
 public:
+    //Approach 2: O(h) Space ------STACK------
+    TreeNode* root;
     stack<TreeNode*> st;
-    BSTIterator(TreeNode* root) {
-        while(root!=nullptr)
+    BSTIterator(TreeNode* r) {
+        root = r;
+        while(root)
         {
             st.push(root);
             root = root->left;
-        }
+        } 
     }
+    
     int next() {
-        TreeNode* ans = st.top();
-        int a = ans->val;
+        int x = st.top()->val;
+        TreeNode* temp = st.top();
         st.pop();
-        if(ans->right){
-            ans = ans->right;
-            while(ans!=nullptr)
-            {
-                st.push(ans);
-                ans = ans->left;
-            }
+        temp = temp->right;
+        while(temp)
+        {
+            st.push(temp);
+            temp = temp->left;
         }
-        return a;
+        return x;
     }
     
     bool hasNext() {
-        if(st.size()>0)
-            return true;
-        return false;
+        return st.size()>0;
     }
 };

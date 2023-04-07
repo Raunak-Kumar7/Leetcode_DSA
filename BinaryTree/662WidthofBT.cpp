@@ -21,12 +21,12 @@ public:
         while(!q.empty())
         {
             int size = q.size();
-            int mmin = q.front().second;  //to make starting index always start from 0
+            int mmin = q.front().second;  //Find the subtractor outside the inner while loop itself //to make starting index always start from 0
             int first,last;
             //
             for(int i=0;i<size;i++)
             {
-                int cur_id = q.front().second-mmin;
+                int cur_id = q.front().second-mmin; //Adjust root's index, no adjustments further
                 TreeNode* node = q.front().first;
                 q.pop();
                 if(i==0)
@@ -44,3 +44,35 @@ public:
         return ans;
     }
 };
+
+
+
+////Same code just self written
+
+    //Level Order Traversal + Indexing of Nodes (2i+1,2i+2) with adjustment (each level starts from 0 index)
+    int widthOfBinaryTree(TreeNode* root) {
+        queue<pair<TreeNode*, int>> q; // {node,index}
+        q.push({root,0});
+        int width = 1;
+        while(!q.empty())
+        {
+            int countNodes = q.size();
+            int firstindex = q.front().second;       //Find the subtractor outside the inner while loop itself
+            while(countNodes > 0)
+            {
+                TreeNode* n = q.front().first;
+                int i = q.front().second-firstindex;  //Adjust root's index, no adjustments further
+                q.pop();
+
+                
+                if(n->left) q.push({n->left, (long long)2*i+1});
+                if(n->right) q.push({n->right, (long long)2*i+2});
+                countNodes--;
+                if(countNodes==0) //last node in hand
+                {
+                    width = max(width,i-0+1); //index of each level starts from 0
+                }
+            }
+        }
+        return width;
+    }
