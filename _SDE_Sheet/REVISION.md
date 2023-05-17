@@ -1,0 +1,3 @@
+## GREEDY
+
+- [x] Minimum Platforms
