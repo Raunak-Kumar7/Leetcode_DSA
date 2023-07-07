@@ -1,6 +1,11 @@
 #### [Representation of a Graph]
 
 #### BFS (Connected + Disconnected)
+LC1091 - Shortest Path in Binary Matrix(keeping count in Vis array)
+(shortest --> only BFS)
+LC2101 - Detonate the Maximum Bombs
+
+
 
 #### DFS (Connected + Disconnected)
 LC129 - Sum Root To Leaf Numbers
@@ -20,6 +25,14 @@ LC1905 - Count Sub Islands (BFS + DFS)
 LC733 - Flood Fill (BFS+DFS)
 LC2685 - Count the Number of Complete Components(BFS+DFS(do))
 LC1319 - Number of Operations to Make Network Connected(BFS + DFS(do))
+LC934 - Shortest Bridge(BFS MultiSource)
+LC529 - Minesweeper(BFS + DFS(do))
+
+
+
+
+
+
 
 
 LC463 - Island Perimeter
@@ -58,6 +71,7 @@ Using BFS(Kahn's Algorithm) (Instead of VISITED keep INDEGREE Array)
 LC 2192 - All ancestors of a Node in a Directed Acyclic Graph(BFS + DFS(do))
 LC2115 - Find All Possible Recipes from Given Supplies(BFS + DFS(do))
 LC210 - Course Schedule2 (BFS(do) + DFS)(also includes cycle detection)
+LC1557 -  Minimum Number of Vertices to Reach All Nodes (Indegree concept)
 
 
 
