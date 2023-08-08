@@ -1,27 +1,26 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
-class Solution {
-public:
-    TreeNode* build(vector<int> &A,int &i,int bound)
-    {
-        if(i==A.size() || A[i]>bound)
-            return NULL;
-        TreeNode* root = new TreeNode(A[i++]);
-        root->left = build(A,i,root->val);
-        root->right = build(A,i,bound);
-        return root;
-    }
-    TreeNode* bstFromPreorder(vector<int>& A) {
-        int i=0;
-        return build(A,i,INT_MAX);
-    }
-};
+// METHOD 1: APPLY INSERT OPERATION FOR ALL NODES IN THE PREORDER
+
+// METHOD 2: CREATE ANOTHER ARRAY INORDER --> CREATE BT USING PREORDER AND INDORDER
+
+// METHOD 3 : USING 1 UPPER BOUND
+//  if we go left to create a node its ub will be root
+// if we go right to create a node its ub will be root's ub
+TreeNode *f(vector<int> &preorder, int &idx, int &ub)
+{
+    if (idx == preorder.size() || preorder[idx] > ub) // 1 extra bc if UB voilation
+        return nullptr;
+
+    TreeNode *root = new TreeNode(preorder[idx]);
+    idx++;
+
+    root->left = f(preorder, idx, root->val);
+    root->right = f(preorder, idx, ub);
+
+    return root;
+}
+TreeNode *bstFromPreorder(vector<int> &preorder)
+{
+    int ub = INT_MAX;
+    int idx = 0;
+    return f(preorder, idx, ub);
+}

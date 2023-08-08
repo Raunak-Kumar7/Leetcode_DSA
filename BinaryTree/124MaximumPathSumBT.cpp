@@ -9,23 +9,25 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution {
+class Solution
+{
 public:
-    //Dp
-    int solve(TreeNode* root, int &res)
+    // postorder --> height approach
+    int f(TreeNode *root, int &maxi)
     {
-        if(root==nullptr)
+        if (root == nullptr)
             return 0;
-        int l = solve(root->left,res);
-        int r = solve(root->right,res);
-        int temp = max(max(l,r)+root->val,root->val);
-        int ans = max(temp,l+r+root->val);
-        res = max(res,ans);
-        return temp;
+        // never considering negative sums --> so return 0 --> means not including if -ve
+        int lsum = max(0, f(root->left, maxi));
+        int rsum = max(0, f(root->right, maxi));
+
+        maxi = max(maxi, lsum + rsum + root->val); // for each node we calc path sum as max from left and max from right and node->val --> and take maxi
+        return root->val + max(lsum, rsum);        // for nodes above it we wont take both lsum or rsum becuase we cant go on 2 paths, so we tak emax of both
     }
-    int maxPathSum(TreeNode* root) {
-        int res = INT_MIN;
-        solve(root,res);
-        return res;
+    int maxPathSum(TreeNode *root)
+    {
+        int maxi = INT_MIN;
+        f(root, maxi);
+        return maxi;
     }
 };

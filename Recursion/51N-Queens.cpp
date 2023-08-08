@@ -1,71 +1,72 @@
-//Same for N-Queens2 lc52
+// Same for N-Queens2 lc52
 
-//https://leetcode.com/problems/n-queens/
-//https://leetcode.com/problems/n-queens-ii/
+// https://leetcode.com/problems/n-queens/
+// https://leetcode.com/problems/n-queens-ii/
 
+// Try Out All Possibilities
 
+// Conditions to be Satisified:
+//  1. Each column has 1 queen
+//  2. Each row has 1 queen
+//  3. No 2 queens should attack each other
 
-bool isValid(int row,int col, vector<string>& board,int n)
+// moving column wise and plaing queen in every possible row of each column
+
+// Backtracking Rule: Remove while going back
+bool isValid(vector<string> &board, int row, int col, int n)
+{
+    // to check if valid, no queen should be placed in that row or column or diagonal(upper left and lower left)
+    for (int i = 0; i < n; i++)
     {
-        //we dont need to check columns bcz we are filling column by column
-        //we only need to check 3 directions left top left and bottom left, bcz right side is not filled yet
-        int duprow = row;
-        int dupcol = col;
-        //top left
-        while(row>=0 && col>=0)
-        {
-            if(board[row][col]=='Q')
-                return false;
-            row--;
-            col--;
-        }
-        //left
-        row = duprow;
-        col = dupcol;
-        while(col>=0)
-        {
-            if(board[row][col]=='Q')
-                return false;
-            col--;
-        }
-        //bottom left
-        row = duprow;
-        col = dupcol;
-        while(col>=0 && row<n)
-        {
-            if(board[row][col]=='Q')
-                return false;
-            col--;
-            row++;
-        }
-        return true;
+        if (board[row][i] == 'Q') // checking row
+            return false;
+        if (board[i][col] == 'Q') // checking col //will never give false bcz we are moving col wise
+            return false;
     }
-    void solve(int col,vector<vector<string>>& ans, vector<string>& board,int n )
+    int i = row, j = col;
+    while (i >= 0 && j >= 0)
     {
-        if(col==n)
+        if (board[i][j] == 'Q')
+            return false;
+        i--;
+        j--;
+    }
+    i = row, j = col;
+    while (i < n && j >= 0)
+    {
+        if (board[i][j] == 'Q')
+            return false;
+        i++;
+        j--;
+    }
+    return true;
+}
+void f(vector<vector<string>> &ans, vector<string> &board, int col, int n)
+{
+    if (col == n) // reached Last row -- all ok till here
+    {
+        ans.push_back(board);
+        return;
+    }
+    // Trying every row for colth column starting from 0
+    for (int row = 0; row < n; row++)
+    {
+        if (isValid(board, row, col, n)) // first check if its safe to place Q at board[row][col]
         {
-            ans.push_back(board);
-            return;
-        }
-        for(int row=0;row<board.size();row++) //try
-        {
-            if(isValid(row,col,board,n))
-            {
-                board[row][col]='Q';
-                solve(col+1,ans,board,n);
-                board[row][col]='.'; //while backtracking remove the previous entred
-            }
+            board[row][col] = 'Q';
+            f(ans, board, col + 1, n); // put for next column
+            board[row][col] = '.';     // remove while going back
         }
     }
-    vector<vector<string>> solveNQueens(int n) {
-        vector<vector<string>> ans;
-        //making 1D board
-        vector<string> board(n); //nrows
-        string s(n,'.');
-        for(int i=0;i<n;i++)
-        {
-            board[i]=s;
-        }
-        solve(0,ans,board,n);
-        return ans;
-    }
+}
+vector<vector<string>> solveNQueens(int n)
+{
+    vector<vector<string>> ans;
+
+    vector<string> board;
+    string s = string(n, '.');
+    for (int i = 0; i < n; i++)
+        board.push_back(s);
+    f(ans, board, 0, n);
+    return ans;
+}

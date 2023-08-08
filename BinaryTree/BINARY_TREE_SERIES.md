@@ -24,6 +24,11 @@ LC637 - Average of Levels in Binary Tree
 LC1161 - Maximum Level Sum of a Binary Tree
 LC2583 - Kth Largest Sum in a Binary Tree
 LC2415 - Reverse Odd Levels of Binary Tree
+LC662 -  Maximum Width of Binary Tree (BFS + INDEXING of each level)(IMP)
+LC863 - All Nodes Distance K in Binary Tree(IMP)
+LC2385 - Amount of Time for Binary Tree to Be Infected(IMP)
+
+
 **LC2471** - 
 LC1302 - Deepest Leaves Sum
 G - Left View of a Binary Tree
@@ -31,11 +36,6 @@ L199 - Binary Tree Right Side View
 LC116 - Populate Next Right Pointers 1 (Also try recursive (dfs) Approach)
 LC117 - Populate Next Right Pointers 2 (Also try recursive (dfs) Approach) (With Level Order Traversal both codes are exactly same)
 LC1609 - Even Odd Tree
-
-#### L28  LC662 - Maximum Width of Binary Tree 
-#### L30  LC863 - All nodes at Distance K
-#### l31  LC2385 - Amount of Time for Binary tree to be infected(Time to  Burn a tree)
-
 
 
 ### L14: Height of a Binary Tree
